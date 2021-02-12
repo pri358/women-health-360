@@ -30,7 +30,12 @@ The main features are:
  1. For gender verification, some steps can be applied like using a 3rd party government authentication and  real-time verification using image processing
  2. For monitoring health data, data from other health apps can be leveraged. 
 
-** Please Note that this is a function prototype and all of the features aren't yet implemented. **
+**Please Note that this is a function prototype and all of the features aren't yet implemented.**
+
+To run the app, please run the file **run.py**
+Dummy-data is used in the database. 
+Login credentials: email - test@gmail.com password - test
+
  
 
 
