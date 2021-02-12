@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Welcome to Women 360</h1>
+    {% if current_user.is_authenticated %}
+        <div>
+        <a class="nav-item nav-link" href="{{ url_for('users.update') }}">Add/Update Basic Info</a>
+        <a class="nav-item nav-link" href="{{ url_for('menstruation.periods') }}">Period Data</a>
+        <a class="nav-item nav-link" href="{{ url_for('healthMonitor.healthHome') }}">Health Data</a>
+        <a class="nav-item nav-link" href="{{ url_for('home.wip') }}">Nutrition and Diet</a>
+        </div>
+    {% endif %}
+{% endblock content %}
