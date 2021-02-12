@@ -41,6 +41,6 @@ Dummy-data is used in the database.
 
 Login credentials: email - test@gmail.com password - test
 
- 
+ Please find the screen recording of the app: screen.mp4
 
 
