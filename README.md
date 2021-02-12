@@ -29,11 +29,16 @@ The main features are:
  Some Challenges and future add-ons: 
  1. For gender verification, some steps can be applied like using a 3rd party government authentication and  real-time verification using image processing
  2. For monitoring health data, data from other health apps can be leveraged. 
+ 3. In the discussion forum, permission will be required to reveal the identity of the user. If denied, anonymity will be maintained. 
+ 4. While detecting anomalities in the health data, data from similar users (similar age, weight and height) can be used. 
+ 5. To increase privacy of the app, two-factor authentication can be used.
 
 **Please Note that this is a function prototype and all of the features aren't yet implemented.**
 
 To run the app, please run the file **run.py**
+
 Dummy-data is used in the database. 
+
 Login credentials: email - test@gmail.com password - test
 
  
