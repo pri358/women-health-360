@@ -25,9 +25,12 @@ def create_app(config_class=config.Config):
     from women360.users.routes import users
     from women360.menstruation.routes import menstruation
     from women360.healthMonitor.routes import healthMonitor
+    from women360.errors.handlers import errors
+
     app.register_blueprint(home)
     app.register_blueprint(users)
     app.register_blueprint(menstruation)
     app.register_blueprint(healthMonitor)
+    app.register_blueprint(errors)
 
     return app
