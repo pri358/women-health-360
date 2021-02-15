@@ -3,11 +3,13 @@
 	{% if current_user.is_authenticated %}
 		<div class = "content-section">
 		    <h3 class = "font-weight-bold"> Health Monitor </h3>
-	        {% if bp %}
+	        {% if fitnessData and healthData %}
 	            <p class="d-block p-2 bg-light text-dark"> Your Last Blood Pressure was {{ bp }}</p>
 	            <p class="d-block p-2 bg-light text-dark"> Your Last Blood Sugar was {{ sugar }}</p>
-	          {% else %}
-	          	<p class="font-weight-light"> Please add data to see more! </p>
+	          {% elif not healthData %}
+	          	<p class="font-weight-light"> Please monitor data to see more! </p>
+	          {% elif not fitnessData %}
+	          	<p class="font-weight-light"> Please update profile to see more! </p>
 	        {% endif %}
 	        <a class="btn btn-secondary btn-sm" href="{{ url_for('healthMonitor.monitor') }}">Add Today's Data</a>
 		</div>

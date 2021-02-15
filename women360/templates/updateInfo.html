@@ -114,5 +114,7 @@
             </div>
         </form>
     </div>
-    <a class="btn btn-success btn-sm" href="{{ url_for('home.homepage') }}">Return</a>
+    {% if update %}
+        <a class="btn btn-success btn-sm" href="{{ url_for('home.homepage') }}">Return</a>
+    {% endif %}
 {% endblock content %}

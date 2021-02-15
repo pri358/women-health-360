@@ -68,7 +68,7 @@ def profile():
         db.session.commit()
         flash('Information successfully updated!')
         return redirect(url_for('home.homepage'))
-    return render_template('updateInfo.html', title='Update Profile', form=form, name = current_user.username, email = current_user.email, update = True)
+    return render_template('updateInfo.html', title='Update Profile', form=form, name = current_user.username, email = current_user.email, update = False)
 
 
 
@@ -105,4 +105,4 @@ def update():
         form.lastPeriodStart.data = fitnessData.lastPeriodStart
         form.lastPeriodEnd.data = fitnessData.lastPeriodEnd
 
-    return render_template('updateInfo.html', title='Update Profile', form=form, name = current_user.username, email = current_user.email, update = False)
+    return render_template('updateInfo.html', title='Update Profile', form=form, name = current_user.username, email = current_user.email, update = True)

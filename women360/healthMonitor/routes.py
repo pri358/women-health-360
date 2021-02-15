@@ -4,6 +4,7 @@ from women360 import db, bcrypt
 from women360.models import User, FitnessData, MenstruationData, Predictions, HealthData
 from women360.healthMonitor.forms import MonitorData
 from women360.healthMonitor.helperfunctions import checkBloodPressure, checkBloodSugar
+from sqlalchemy import desc
 
 healthMonitor = Blueprint('healthMonitor', __name__)
 
@@ -11,9 +12,15 @@ healthMonitor = Blueprint('healthMonitor', __name__)
 @healthMonitor.route("/health/home", methods=['GET', 'POST'])
 @login_required
 def healthHome():
-    val = checkBloodPressure(current_user.id)
-    sugar = checkBloodSugar(current_user.id)
-    return render_template('healthHome.html', bp=val, sugar=sugar)
+    fitnessData = FitnessData.query.filter_by(user_id=current_user.id).first()
+    healthData = HealthData.query.filter_by(user_id=current_user.id).order_by(desc('timestamp')).limit(
+        1).first()
+    val = None
+    sugar = None
+    if fitnessData and healthData:
+        val = checkBloodPressure(current_user.id)
+        sugar = checkBloodSugar(current_user.id)
+    return render_template('healthHome.html', bp=val, sugar=sugar, fitnessData = fitnessData, healthData = healthData)
 
 
 @healthMonitor.route("/health/monitor", methods=['GET', 'POST'])

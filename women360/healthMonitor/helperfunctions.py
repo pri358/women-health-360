@@ -21,8 +21,6 @@ def detectAnomaly(data, curValue):
 def checkBloodPressure(user_id):
     user = HealthData.query.filter_by(user_id=user_id).order_by(desc('timestamp')).limit(
         1).first()
-    if user is None:
-        return None
     latestLowBloodPressure = user.lowBloodPressure
     latestHighBloodPressure = user.highBloodPressure
 
@@ -43,6 +41,7 @@ def checkBloodPressure(user_id):
             dataHighBloodPressure.append(data.highBloodPressure)
     low = detectAnomaly(dataLowBloodPressure, latestLowBloodPressure)
     high = detectAnomaly(dataHighBloodPressure, latestHighBloodPressure)
+
     if low == "high" or high == "high":
         return "high"
     if low == "low" or high == "low":
