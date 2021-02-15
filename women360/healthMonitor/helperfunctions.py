@@ -22,7 +22,7 @@ def checkBloodPressure(user_id):
     user = HealthData.query.filter_by(user_id=user_id).order_by(desc('timestamp')).limit(
         1).first()
     if user is None:
-        return ""
+        return None
     latestLowBloodPressure = user.lowBloodPressure
     latestHighBloodPressure = user.highBloodPressure
 
@@ -54,7 +54,7 @@ def checkBloodSugar(user_id):
     user = HealthData.query.filter_by(user_id=user_id).order_by(desc('timestamp')).limit(
         1).first()
     if user is None:
-        return ""
+        return None
     latestBloodSugar = HealthData.query.filter_by(user_id=user_id).order_by(desc('timestamp')).limit(
         1).first().bloodSugar
 

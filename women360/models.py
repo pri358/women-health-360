@@ -31,13 +31,13 @@ class FitnessData(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     timestamp = db.Column(db.DateTime(), default=datetime.datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    age = db.Column(db.Integer)
-    height = db.Column(db.Float)
-    weight = db.Column(db.Float)
-    avgPeriodLen = db.Column(db.Integer)
-    avgCycleLen = db.Column(db.Integer)
-    lastPeriodStart = db.Column(db.Date())
-    lastPeriodEnd = db.Column(db.Date())
+    age = db.Column(db.Integer, default = None)
+    height = db.Column(db.Float, default = None)
+    weight = db.Column(db.Float, default = None)
+    avgPeriodLen = db.Column(db.Integer, default = None)
+    avgCycleLen = db.Column(db.Integer, default = None)
+    lastPeriodStart = db.Column(db.Date(), default = None)
+    lastPeriodEnd = db.Column(db.Date(), default = None)
 
     def __init__(self, user_id, age, height, weight, avgPeriodLen, avgCycleLen, lastPeriodStart, lastPeriodEnd):
         self.user_id = user_id
@@ -48,6 +48,9 @@ class FitnessData(db.Model, UserMixin):
         self.lastPeriodEnd = lastPeriodEnd
         self.height = height
         self.weight = weight
+
+    def __init__(self, user_id):
+        self.user_id = user_id
 
     def __repr__(self):
         return str(self.user_id)
@@ -64,8 +67,8 @@ class MenstruationData(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     timestamp = db.Column(db.DateTime(), default=datetime.datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    startDate = db.Column(db.Date())
-    endDate = db.Column(db.Date())
+    startDate = db.Column(db.Date(), default = None)
+    endDate = db.Column(db.Date(), default = None)
     comment = db.Column(db.String(250), default=None)
 
     def __init__(self, user_id, startDate, endDate, comment):
@@ -88,9 +91,11 @@ class Predictions(db.Model):
         self.nextPeriodStart, self.nextPeriodEnd = self.predict(periodEntries, periodData)
 
     def predict(self, periodEntries, periodData):
-        nextStartDate = periodData.lastPeriodStart + datetime.timedelta(periodData.avgCycleLen)
-        nextEndDate = nextStartDate + datetime.timedelta(periodData.avgPeriodLen)
-        return nextStartDate, nextEndDate
+        if periodData.avgCycleLen and periodData.avgPeriodLen:
+            nextStartDate = periodData.lastPeriodStart + datetime.timedelta(periodData.avgCycleLen)
+            nextEndDate = nextStartDate + datetime.timedelta(periodData.avgPeriodLen)
+            return nextStartDate, nextEndDate
+        return None, None
 
 
 class HealthData(db.Model):

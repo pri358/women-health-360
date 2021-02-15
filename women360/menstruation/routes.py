@@ -27,8 +27,14 @@ def track():
         comment = escape(form.comment.data)
         data = MenstruationData(current_user.id, startDate, endDate, comment)
         fitnessData = FitnessData.query.filter_by(user_id=current_user.id).first()
+        if fitnessData is None:
+            fitnessData = FitnessData(user_id = current_user.id)
+            db.session.add(fitnessData)
         fitnessData.updateLastPeriod(startDate, endDate)
         predictions = Predictions.query.filter_by(user_id=current_user.id).first()
+        if predictions is None:
+            predictions = Predictions(user_id = current_user.id)
+            db.session.add(predictions)
         predictions.updateNextPeriod([], fitnessData)
         db.session.add(data)
         db.session.commit()

@@ -18,6 +18,11 @@ def create_app(config_class=config.Config):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
 
+    # @app.before_first_request
+    # def create():
+    #     db.drop_all()
+    #     db.create_all()
+
     bcrypt.init_app(app)
     login_manager.init_app(app)
 

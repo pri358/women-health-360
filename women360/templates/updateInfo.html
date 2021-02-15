@@ -4,20 +4,26 @@
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Add Info</legend>
-                <div class="form-group">
-                    {{ form.age.label(class="form-control-label") }}
-                    {% if form.age.errors %}
-                        {{ form.age(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.age.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.age(class="form-control form-control-lg") }}
-                    {% endif %}
+                <legend class="border-bottom mb-4">Profile</legend>
+                <div>
+                    <p> Name: {{name}} </p>
+                    <p> Email: {{email}} </p>
                 </div>
+                {% if True %}
+                    <div class="form-group">
+                        {{ form.age.label(class="form-control-label") }}
+                        {% if form.age.errors %}
+                            {{ form.age(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.age.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.age(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                {% endif %}
                 <div class="form-group">
                     {{ form.height.label(class="form-control-label") }}
                     {% if form.height.errors %}

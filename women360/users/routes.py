@@ -3,7 +3,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from women360 import db, bcrypt
 from women360.models import User, FitnessData, Predictions
 from women360.users.forms import (RegistrationForm, LoginForm, DataForm)
-from datetime import datetime
+from datetime import datetime, date
 
 users = Blueprint('users', __name__)
 
@@ -19,18 +19,9 @@ def register():
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
-        date_format = "%Y-%m-%d"
-        startDate = datetime.strptime(escape(form.lastPeriodStart.data), date_format)
-        endDate = datetime.strptime(escape(form.lastPeriodEnd.data), date_format)
-        fitnessData = FitnessData(user.id, form.age.data, form.height.data, form.weight.data, form.avgPeriodLen.data, form.avgCycleLen.data,
-                                  startDate, endDate)
-        predictions = Predictions(user_id=user.id)
-        predictions.updateNextPeriod([], fitnessData)
-        db.session.add(predictions)
-        db.session.add(fitnessData)
-        db.session.commit()
-        flash('Your account has been created! You are now able to log in', 'success')
-        return redirect(url_for('users.login', current_id=user.id))
+        login_user(user)
+        flash('Your account has been created! You have been logged in', 'success')
+        return redirect(url_for('users.profile'))
     return render_template('register.html', title='Register and Info', form=form)
 
 
@@ -43,7 +34,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
-            login_user(user, remember=form.remember)
+            login_user(user)
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('home.homepage'))
         else:
@@ -55,6 +46,31 @@ def login():
 def signout():
     logout_user()
     return redirect(url_for('home.homepage'))
+
+
+@users.route("/profile", methods = ['GET', 'POST'])
+@login_required
+def profile():
+    form = DataForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        date_format = "%Y-%m-%d"
+        # dob = datetime.strptime(escape(form.dob.data), date_format)
+        startDate = datetime.strptime(escape(form.lastPeriodStart.data), date_format)
+        endDate = datetime.strptime(escape(form.lastPeriodEnd.data), date_format)
+        # age = date.today().year - dob.year
+        age  = form.age.data
+        fitnessData = FitnessData(current_user.id, age, form.height.data, form.weight.data, form.avgPeriodLen.data, form.avgCycleLen.data,
+                                  startDate, endDate)
+        predictions = Predictions(user_id=current_user.id)
+        predictions.updateNextPeriod([], fitnessData)
+        db.session.add(predictions)
+        db.session.add(fitnessData)
+        db.session.commit()
+        flash('Information successfully updated!')
+        return redirect(url_for('home.homepage'))
+    return render_template('updateInfo.html', title='Update Profile', form=form, name = current_user.username, email = current_user.email, update = True)
+
+
 
 
 @users.route("/update", methods=['GET', 'POST'])
@@ -80,7 +96,7 @@ def update():
         flash('Information successfully updated!')
         return redirect(url_for('home.homepage'))
 
-    elif request.method == 'GET':
+    elif request.method == 'GET' and fitnessData:
         form.age.data = fitnessData.age
         form.height.data = fitnessData.height
         form.weight.data = fitnessData.weight
@@ -89,4 +105,4 @@ def update():
         form.lastPeriodStart.data = fitnessData.lastPeriodStart
         form.lastPeriodEnd.data = fitnessData.lastPeriodEnd
 
-    return render_template('updateInfo.html', title='Update Info', form=form)
+    return render_template('updateInfo.html', title='Update Profile', form=form, name = current_user.username, email = current_user.email, update = False)

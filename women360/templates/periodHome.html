@@ -4,8 +4,17 @@
     <br>
     {% if current_user.is_authenticated %}
         <div>
-            <h4> Last Period: {{ data.lastPeriodStart.strftime('%Y-%m-%d') }} to {{ data.lastPeriodEnd.strftime('%Y-%m-%d') }}</h4>
-            <h4> Next Period: {{ predictions.nextPeriodStart.strftime('%Y-%m-%d') }} to {{ predictions.nextPeriodEnd.strftime('%Y-%m-%d') }}</h4>
+            {% if data.lastPeriodStart %}
+                <h4> Last Period: {{ data.lastPeriodStart.strftime('%Y-%m-%d') }} to {{ data.lastPeriodEnd.strftime('%Y-%m-%d') }}</h4>
+            {% else %}
+                <p> Please track your periods to get details!
+            {% endif %}
+
+            {% if predictions.nextPeriodStart %}
+                <h4> Next Period: {{ predictions.nextPeriodStart.strftime('%Y-%m-%d') }} to {{ predictions.nextPeriodEnd.strftime('%Y-%m-%d') }}</h4>
+            {% else %}
+                <p> Please update some details in the Profile section to know about predictions! </p>
+            {% endif %}
         </div>
         <br>
         <div>
