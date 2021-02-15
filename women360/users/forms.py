@@ -37,7 +37,6 @@ class LoginForm(FlaskForm):
 
 class DataForm(FlaskForm):
     age = IntegerField('Age', validators = [DataRequired()])
-    # dob = DateField('Date of Birth', validators = [DataRequired()])
     height = FloatField('Height (in cms)', validators=[DataRequired()])
     weight = FloatField('Weight (in kgs)', validators=[DataRequired()])
     avgPeriodLen = IntegerField('Average Period Length', validators=[DataRequired(), NumberRange(1, 15, "Inappropriate "

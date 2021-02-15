@@ -9,3 +9,7 @@ class RecordData(FlaskForm):
     endDate = DateField('Period End Date', validators=[DataRequired()], format='%Y-%m-%d')
     comment = StringField('Additional Comments')
     submit = SubmitField('Submit')
+
+    def validate_endDate(self, endDate):
+        if self.startDate.data > endDate.data:
+            raise ValidationError("End Date should be after the Start Date.")
