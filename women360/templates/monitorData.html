@@ -5,7 +5,7 @@
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Log Today's Data</legend>
-                <div class="form-group">
+                <div class="form-group form-control-sm">
                     {{ form.lowBloodPressure.label(class="form-control-label") }}
                     {% if form.lowBloodPressure.errors %}
                         {{ form.lowBloodPressure(class="form-control form-control-lg is-invalid") }}
@@ -18,7 +18,7 @@
                         {{ form.lowBloodPressure(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
-                <div class="form-group">
+                <div class="form-group form-control-sm">
                     {{ form.highBloodPressure.label(class="form-control-label") }}
                     {% if form.highBloodPressure.errors %}
                         {{ form.highBloodPressure(class="form-control form-control-lg is-invalid") }}
@@ -31,7 +31,7 @@
                         {{ form.highBloodPressure(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
-                <div class="form-group">
+                <div class="form-group form-control-sm">
                     {{ form.bloodSugar.label(class="form-control-label") }}
                     {% if form.bloodSugar.errors %}
                         {{ form.bloodSugar(class="form-control form-control-lg is-invalid") }}
@@ -45,9 +45,10 @@
                     {% endif %}
                 </div>
             </fieldset>
-            <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
+            <div class="form-group form-control-sm">
+                {{ form.submit(class="btn btn-outline-dark btn-sm") }}
             </div>
         </form>
     </div>
+    <a class="btn btn-success btn-sm" href="{{ url_for('healthMonitor.healthHome') }}">Return to Prev-Page</a>
 {% endblock content %}

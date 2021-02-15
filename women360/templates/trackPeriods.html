@@ -5,7 +5,7 @@
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Track Periods</legend>
-                <div class="form-group">
+                <div class="form-group form-control-sm">
                     {{ form.startDate.label(class="form-control-label") }}
                     {% if form.startDate.errors %}
                         {{ form.startDate(class="form-control form-control-lg is-invalid") }}
@@ -18,7 +18,7 @@
                         {{ form.startDate(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
-                <div class="form-group">
+                <div class="form-group form-control-sm">
                     {{ form.endDate.label(class="form-control-label") }}
                     {% if form.endDate.errors %}
                         {{ form.endDate(class="form-control form-control-lg is-invalid") }}
@@ -31,7 +31,7 @@
                         {{ form.endDate(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
-                <div class="form-group">
+                <div class="form-group form-control-sm">
                     {{ form.comment.label(class="form-control-label") }}
                     {% if form.comment.errors %}
                         {{ form.comment(class="form-control form-control-lg is-invalid") }}
@@ -45,10 +45,10 @@
                     {% endif %}
                 </div>
             </fieldset>
-            <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
+            <div class="form-group form-control-sm">
+                {{ form.submit(class="btn btn-outline-dark btn-sm") }}
             </div>
         </form>
-        <a class="nav-item nav-link" href="{{ url_for('menstruation.periods') }}">Return to Prev-Page</a>
     </div>
+        <a class="btn btn-success btn-sm" href="{{ url_for('menstruation.periods') }}">Return to Prev-Page</a>
 {% endblock content %}

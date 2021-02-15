@@ -1,8 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
 	<div class="content-section">
-	    <h4>WORK IN PROGRESS!!</h4>
-	    <p> We'll be back soon</p>
-	    <a class="nav-item nav-link" href="{{ url_for('home.homepage') }}">Return to HomePage</a>
+	    <h4 class = "text-left">WORK IN PROGRESS!!</h4>
+	    <p class = "text-muted"> We'll be back soon</p>
 	</div>
+	<a class="btn btn-success btn-sm" href="{{ url_for('home.homepage') }}">Return to HomePage</a>
+	
 {% endblock content %}

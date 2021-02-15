@@ -1,28 +1,24 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Here you can see you data related to Menstruation </h1>
-    <br>
-    {% if current_user.is_authenticated %}
-        <div>
-            {% if data.lastPeriodStart %}
-                <h4> Last Period: {{ data.lastPeriodStart.strftime('%Y-%m-%d') }} to {{ data.lastPeriodEnd.strftime('%Y-%m-%d') }}</h4>
-            {% else %}
-                <p> Please track your periods to get details!
-            {% endif %}
-
-            {% if predictions.nextPeriodStart %}
-                <h4> Next Period: {{ predictions.nextPeriodStart.strftime('%Y-%m-%d') }} to {{ predictions.nextPeriodEnd.strftime('%Y-%m-%d') }}</h4>
-            {% else %}
-                <p> Please update some details in the Profile section to know about predictions! </p>
-            {% endif %}
-        </div>
+    <div class = "content-section">
+        <h3 class = "font-weight-bold">Here you can see you data related to Menstruation! </h3>
         <br>
-        <div>
-            <a class="nav-item nav-link" href="{{ url_for('menstruation.track') }}">Track-Periods</a>
-            <a class="nav-item nav-link" href="{{ url_for('home.homepage') }}">Return to HomePage</a>
-        </div>
-        <div>
-            <a class="nav-item nav-link" href="{{ url_for('home.wip') }}">Checkout some FAQ's and Myths</a>
-        </div>
-    {% endif %}
+        {% if current_user.is_authenticated %}
+            {% if data.lastPeriodStart %}
+                <p class="d-block p-2 bg-light text-dark"> Last Period: {{ data.lastPeriodStart.strftime('%Y-%m-%d') }} to {{ data.lastPeriodEnd.strftime('%Y-%m-%d') }}</p>
+            {% else %}
+                <p class="font-weight-light"> Please track your periods to get details!
+            {% endif %}
+            {% if predictions.nextPeriodStart %}
+                <p class="d-block p-2 bg-light text-dark"> Next Period: {{ predictions.nextPeriodStart.strftime('%Y-%m-%d') }} to {{ predictions.nextPeriodEnd.strftime('%Y-%m-%d') }}</p>
+            {% else %}
+                <p class="font-weight-light"> Please update some details in the Profile section to know about predictions! </p>
+            {% endif %}
+            <br>
+            <a class="btn btn-secondary" href="{{ url_for('menstruation.track') }}">Track-Periods</a>
+            <a class="btn btn-secondary" href="{{ url_for('home.wip') }}">Discussion Forum</a>
+            <a class="btn btn-secondary" href="{{ url_for('home.wip') }}">Checkout some FAQ's and Myths</a>
+        {% endif %}
+    </div>
+    <a class="btn btn-success btn-sm" href="{{ url_for('home.homepage') }}">Return to HomePage</a>
 {% endblock content %}

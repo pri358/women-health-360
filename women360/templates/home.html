@@ -1,12 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Welcome to Women 360</h1>
+    <h1 class = "text-left">Welcome to Women 360</h1>
+    <br>
     {% if current_user.is_authenticated %}
-        <div>
-        <a class="nav-item nav-link" href="{{ url_for('users.update') }}">Edit Profile</a>
-        <a class="nav-item nav-link" href="{{ url_for('menstruation.periods') }}">Period Data</a>
-        <a class="nav-item nav-link" href="{{ url_for('healthMonitor.healthHome') }}">Health Data</a>
-        <a class="nav-item nav-link" href="{{ url_for('home.wip') }}">Nutrition and Diet</a>
-        </div>
+    <a class="btn btn-secondary" href="{{ url_for('users.update') }}">Edit Profile</a>
+    <a class="btn btn-secondary" href="{{ url_for('menstruation.periods') }}">Menstruation Cycles</a>
+    <a class="btn btn-secondary" href="{{ url_for('healthMonitor.healthHome') }}">Health Monitor</a>
+    <a class="btn btn-secondary" href="{{ url_for('home.wip') }}">Nutrition and Diet</a>
+    <br> <br>
     {% endif %}
+    <img class="rounded float-center" src="static/home_image.jpg">
 {% endblock content %}

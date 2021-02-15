@@ -1,14 +1,16 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Health Monitor</h1>
-    {% if current_user.is_authenticated %}
-        <a class="nav-item nav-link" href="{{ url_for('healthMonitor.monitor') }}">Add Today's Data</a>
-        {% if bp %}
-            <p> Your Last Blood Pressure was {{ bp }}</p>
-            <p> Your Last Blood Sugar was {{ sugar }}</p>
-          {% else %}
-          	<p> Please add data to see more! </p>
-        {% endif %}
-        <a class="nav-item nav-link" href="{{ url_for('home.homepage') }}">Return</a>
-    {% endif %}
+	{% if current_user.is_authenticated %}
+		<div class = "content-section">
+		    <h3 class = "font-weight-bold"> Health Monitor </h3>
+	        {% if bp %}
+	            <p class="d-block p-2 bg-light text-dark"> Your Last Blood Pressure was {{ bp }}</p>
+	            <p class="d-block p-2 bg-light text-dark"> Your Last Blood Sugar was {{ sugar }}</p>
+	          {% else %}
+	          	<p class="font-weight-light"> Please add data to see more! </p>
+	        {% endif %}
+	        <a class="btn btn-secondary btn-sm" href="{{ url_for('healthMonitor.monitor') }}">Add Today's Data</a>
+		</div>
+		<a class="btn btn-success btn-sm" href="{{ url_for('home.homepage') }}">Return</a>
+	{% endif %}
 {% endblock content %}
