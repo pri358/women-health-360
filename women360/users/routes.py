@@ -54,10 +54,8 @@ def profile():
     form = DataForm()
     if request.method == 'POST' and form.validate_on_submit():
         date_format = "%Y-%m-%d"
-        # dob = datetime.strptime(escape(form.dob.data), date_format)
         startDate = datetime.strptime(escape(form.lastPeriodStart.data), date_format)
         endDate = datetime.strptime(escape(form.lastPeriodEnd.data), date_format)
-        # age = date.today().year - dob.year
         age  = form.age.data
         fitnessData = FitnessData(current_user.id, age, form.height.data, form.weight.data, form.avgPeriodLen.data, form.avgCycleLen.data,
                                   startDate, endDate)
@@ -83,6 +81,9 @@ def update():
         date_format = "%Y-%m-%d"
         startDate = datetime.strptime(escape(form.lastPeriodStart.data), date_format)
         endDate = datetime.strptime(escape(form.lastPeriodEnd.data), date_format)
+        if fitnessData is None:
+            fitnessData = FitnessData(user_id = current_user.id)
+            db.session.add(fitnessData)
         fitnessData.age = form.age.data
         fitnessData.height = form.height.data
         fitnessData.weight = form.weight.data
@@ -91,6 +92,9 @@ def update():
         fitnessData.lastPeriodStart = startDate
         fitnessData.lastPeriodEnd = endDate
         predictions = Predictions.query.filter_by(user_id=current_user.id).first()
+        if predictions is None:
+            predictions = Predictions(user_id = current_user.id)
+            db.session.add(predictions)
         predictions.updateNextPeriod([], fitnessData)
         db.session.commit()
         flash('Information successfully updated!')

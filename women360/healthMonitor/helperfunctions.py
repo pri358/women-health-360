@@ -8,13 +8,20 @@ def detectAnomaly(data, curValue):
     data = np.array(data)
     dataStd = np.std(data)
     dataMean = np.mean(data)
-    cutOff = dataStd*2
+    cutOff = dataStd
     lowerLimit = dataMean - cutOff
     upperLimit = dataMean + cutOff
     if curValue > upperLimit:
         return "high"
     if curValue < lowerLimit:
         return "low"
+    return "normal"
+
+def detectManually(curValue, lowLimit, highLimit):
+    if curValue < lowLimit:
+        return "low"
+    elif curValue > highLimit: 
+        return "high"
     return "normal"
 
 
@@ -39,8 +46,14 @@ def checkBloodPressure(user_id):
         for data in relatedData:
             dataLowBloodPressure.append(data.lowBloodPressure)
             dataHighBloodPressure.append(data.highBloodPressure)
-    low = detectAnomaly(dataLowBloodPressure, latestLowBloodPressure)
-    high = detectAnomaly(dataHighBloodPressure, latestHighBloodPressure)
+
+    if len(dataLowBloodPressure) < 5:
+        low = detectManually(latestLowBloodPressure, 60, 90)
+        high = detectManually(latestHighBloodPressure, 80, 1202)
+        
+    else:
+        low = detectAnomaly(dataLowBloodPressure, latestLowBloodPressure)
+        high = detectAnomaly(dataHighBloodPressure, latestHighBloodPressure)
 
     if low == "high" or high == "high":
         return "high"
@@ -69,4 +82,6 @@ def checkBloodSugar(user_id):
         relatedData = HealthData.query.filter_by(user_id=relatedUserId)
         for data in relatedData:
             dataBloodSugar.append(data.bloodSugar)
+    if len(dataBloodSugar) < 5:
+        return detectManually(latestBloodSugar, 70, 140)
     return detectAnomaly(dataBloodSugar, latestBloodSugar)
